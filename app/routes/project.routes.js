@@ -15,9 +15,7 @@ module.exports = app => {
 
   router.post("/assignVehicle", users.assignVehicle)
 
-  router.delete("/:vehicle_Ownership_uuid", users.delete);
-
-  router.delete("/deleteAll", users.deleteAll);
+  router.delete("/:vehicle_Ownership_uuid", users.delete)
 
   app.use('/api/v1', router);
 };

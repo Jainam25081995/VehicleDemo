@@ -163,12 +163,15 @@ exports.assignVehicle = (req, res) => {
 
 exports.delete = (req, res) => {
 
-      VehicleOwnership.update({
-        isDeleted: 1,
-        where: { vehicle_Ownership_uuid: vehicle_Ownership_uuid_id }
-      })
-      .then(num => {
-        if (num == 1) {
+  const vehicle_Ownership_uuid_id = req.body.vehicle_Ownership_uuid;
+  console.log(vehicle_Ownership_uuid_id);
+
+      VehicleOwnership.update
+      (
+        {isDeleted: 1},
+        {where: {vehicle_Ownership_uuid: vehicle_Ownership_uuid_id}})
+      .then(isDeletedFlag => {
+        if (isDeletedFlag == 1) {
           res.json({ resultCode:responseCode.SUCCESS, result:false, msg: responseCode.DELETE_MESSAGE });
         } else {
           res.json({ resultCode:responseCode.ERROR, result:false, msg: responseCode.DELETE_INDIVIDUAL_MESSAGE });
@@ -179,17 +182,3 @@ exports.delete = (req, res) => {
       });
     };
 
-exports.deleteAll = (req, res) => {
-
-      VehicleOwnership.update({
-        isDeleted: 1,
-        where: {},
-        truncate: false
-      })
-      .then(nums => {
-        res.json({ resultCode:responseCode.SUCCESS, result:false, msg: responseCode.DELETE_MESSAGE });
-      })
-      .catch(err => {
-        res.json({ resultCode:responseCode.ERROR, result:false, msg: responseCode.DELETE_INVALID });
-      });
-    };
